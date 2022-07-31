@@ -1,0 +1,6 @@
+../Core/Src/motor.c:3:6:motor_hardware_setup	16	static
+../Core/Src/motor.c:38:6:motor_driver_initialize	16	static
+../Core/Src/motor.c:46:6:motor_duty_output	32	static
+../Core/Src/motor.c:61:6:motor_encoder_update	32	static
+../Core/Src/motor.c:71:6:motor_command_tracking	32	static
+../Core/Src/motor.c:90:7:voltage_to_dutycycle	16	static
