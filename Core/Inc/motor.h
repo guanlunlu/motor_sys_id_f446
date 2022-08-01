@@ -7,12 +7,13 @@
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim8;
 extern float random_input[];
 
 
 typedef struct driver_hardware{
-    GPIO_TypeDef * IN1_port;
-    uint16_t IN1_pin;
+    GPIO_TypeDef * ENA_port;
+    uint16_t ENA_pin;
 
     GPIO_TypeDef * IN2_port;
     uint16_t IN2_pin;
@@ -20,10 +21,15 @@ typedef struct driver_hardware{
     GPIO_TypeDef * EN_port;
     uint16_t EN_pin;
 
-    TIM_HandleTypeDef * pwm_timer;
-    unsigned int pwm_channel;
+    TIM_HandleTypeDef * IN1_pwm_timer;
+    unsigned int IN1_pwm_channel;
+    float IN1_pwm_counter;
+
+    TIM_HandleTypeDef * IN2_pwm_timer;
+    unsigned int IN2_pwm_channel;
+    float IN2_pwm_counter;
     float pwm_duty;
-    float pwm_counter;
+
     float max_voltage;
 }Driver;
 
@@ -65,7 +71,7 @@ void motor_encoder_update(motor *motor);
 
 void motor_driver_initialize(motor *motor);
 
-void motor_duty_output(motor *motor, float duty_cycle, int dir);
+void motor_duty_output(motor *motor, float duty_cycle);
 
 void motor_command_tracking(motor *motor);
 
