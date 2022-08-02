@@ -71,6 +71,8 @@ float duty = 1.0;
 float max_voltage = 12.24;
 float output_duty = 0;
 int sample_idx = 0;
+float sine_freq = 132;
+float sine_amplitude = 6;
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (htim == &htim5){
@@ -80,29 +82,26 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			printf("timestamp, output_voltage, angular_velocity \n");
 		}
 
-    motor_command_tracking(&motor_1);
 
-    if (tim_cnt % 10 == 0){
-//      log_motor_state(&motor_1, sec);
-    }
+//     for logging
+//		 if (tim_cnt % 500 == 0){
+//		 	if (logger.finished_logging == 0){
+//		 		motor_1.controller.command_vel = get_logger_input(&logger);
+//		 	}
+//		 	else{
+//		 		motor_1.controller.command_vel = 0;
+//		 	}
+//		 }
 
-    // for logging
-		// if (tim_cnt % 10 == 0){
-		// 	if (logger.finished_logging == 0){
-		// 		output_duty = voltage_to_dutycycle(&motor_1, get_logger_input(&logger));
-		// 		motor_duty_output(&motor_1, output_duty, 1);
-		// 		log_motor_state(&motor_1, sec);
-		// 	}
-		// 	else{
-		// 		motor_duty_output(&motor_1, 0, 1);
-		// 	}
-		// }
-
-     if (sec == 1)
-    	 motor_1.controller.command_vel = 6.0;
+//     if (sec == 1)
+//    	 motor_1.controller.command_vel = 6.0;
 //    	 motor_duty_output(&motor_1, 0.5);
 
-     if (tim_cnt % 10 == 0 && sec <= 5)
+	motor_1.controller.command_vel = sine_amplitude * sin(sine_freq * sec);
+
+    motor_command_tracking(&motor_1);
+
+     if (tim_cnt % 4 == 0 && sec <= 5)
        log_motor_state(&motor_1, sec);
 
 		tim_cnt ++;
